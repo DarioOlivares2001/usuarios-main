@@ -41,7 +41,6 @@ public class User {
         this.password = password;
     }
 
-    // Getters and Setters
 
     
 

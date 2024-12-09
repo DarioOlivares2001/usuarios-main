@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RecetasController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">usuarios</a> &gt; <a href="index.source.html" class="el_package">com.microrecetas.usuarios.controller</a> &gt; <span class="el_source">RecetasController.java</span></div><h1>RecetasController.java</h1><pre class="source lang-java linenums">package com.microrecetas.usuarios.controller;
+
+import com.microrecetas.usuarios.model.Comentario;
+import com.microrecetas.usuarios.model.Receta;
+import com.microrecetas.usuarios.service.ComentarioService;
+import com.microrecetas.usuarios.service.RecetaService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping(&quot;/api/recetas&quot;)
+<span class="fc" id="L22">public class RecetasController {</span>
+
+    @Autowired
+    private RecetaService recetaService;
+
+    @Autowired
+    private ComentarioService comentarioService;
+
+ // Endpoint para traer todas las recetas
+    @GetMapping(&quot;/todas&quot;)
+    public List&lt;Receta&gt; obtenerTodasLasRecetas() {
+<span class="fc" id="L33">        return recetaService.obtenerTodasLasRecetas();</span>
+    }
+
+    // Endpoint para traer una receta por ID
+    @GetMapping(&quot;/{id}&quot;)
+    public Receta obtenerRecetaPorId(@PathVariable Long id) {
+<span class="fc" id="L39">        return recetaService.obtenerRecetaPorId(id)</span>
+<span class="fc" id="L40">                .orElseThrow(() -&gt; new RuntimeException(&quot;Receta no encontrada&quot;));</span>
+    }
+
+
+    @GetMapping(&quot;/buscar&quot;)
+    public Receta buscarRecetaPorNombre(@RequestParam(value = &quot;nombre&quot;) String nombre) {
+<span class="fc" id="L46">        Optional&lt;Receta&gt; recetaOptional = Optional.ofNullable(recetaService.buscarRecetaPorNombre(nombre));</span>
+<span class="fc" id="L47">        return recetaOptional.orElse(null); // Devuelve null si no se encuentra</span>
+    }
+
+    // Endpoint para agregar una receta con foto y video
+    @PostMapping(&quot;/crear&quot;)
+    public Receta crearReceta(@RequestBody Receta receta) {
+<span class="fc" id="L53">        return recetaService.crearReceta(receta);</span>
+    }
+
+    // Endpoint para agregar un comentario a una receta
+    @PostMapping(&quot;/comentarios&quot;)
+    public Comentario agregarComentario(@RequestBody Comentario comentario) {
+         // Obtener la receta correspondiente por ID (suponiendo que la receta tiene un ID)
+<span class="fc" id="L60">        Receta receta = recetaService.obtenerRecetaPorId(comentario.getReceta().getId())</span>
+<span class="pc" id="L61">        .orElseThrow(() -&gt; new RuntimeException(&quot;Receta no encontrada&quot;));</span>
+
+        // Asociar el comentario a la receta
+<span class="nc" id="L64">        comentario.setReceta(receta);</span>
+
+<span class="nc" id="L66">        return comentarioService.crearComentario(comentario);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

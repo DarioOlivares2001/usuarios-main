@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">usuarios</a> &gt; <a href="index.source.html" class="el_package">com.microrecetas.usuarios.controller</a> &gt; <span class="el_source">UserController.java</span></div><h1>UserController.java</h1><pre class="source lang-java linenums">// UserController.java
+package com.microrecetas.usuarios.controller;
+
+import com.microrecetas.usuarios.jwt.JWTAuthtenticationConfig;
+import com.microrecetas.usuarios.model.Receta;
+import com.microrecetas.usuarios.model.User;
+import com.microrecetas.usuarios.service.CustomUserDetailsService;
+import com.microrecetas.usuarios.service.RecetaService;
+import com.microrecetas.usuarios.service.UserService;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
+
+
+@RestController
+@RequestMapping(&quot;/api&quot;)
+<span class="fc" id="L26">public class UserController {</span>
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private CustomUserDetailsService userDetailsService;
+
+    @Autowired
+    JWTAuthtenticationConfig jwtAuthtenticationConfig;
+
+     @Autowired
+    private PasswordEncoder passwordEncoder;  // Añade esta línea
+
+   @Autowired
+    private RecetaService recetaService;
+
+    @PostMapping(&quot;/register&quot;)
+    public ResponseEntity&lt;String&gt; registerUser(@RequestBody User user) {
+<span class="fc" id="L45">        userService.registerUser(user);</span>
+<span class="fc" id="L46">        return ResponseEntity.status(HttpStatus.CREATED).body(&quot;User registered successfully&quot;);</span>
+    }
+
+    @PostMapping(&quot;/login&quot;)
+    public ResponseEntity&lt;String&gt; loginUser(
+            @RequestParam(required = true) String username,
+            @RequestParam(required = true) String password) {
+        try {
+            // Log para debugging
+<span class="fc" id="L55">            System.out.println(&quot;Login attempt for user: &quot; + username);</span>
+            
+<span class="fc" id="L57">            UserDetails userDetails = userDetailsService.loadUserByUsername(username);</span>
+            
+            // Log para debugging
+<span class="fc" id="L60">            System.out.println(&quot;User found in database&quot;);</span>
+            
+<span class="fc bfc" id="L62" title="All 2 branches covered.">            if (!passwordEncoder.matches(password, userDetails.getPassword())) {</span>
+<span class="fc" id="L63">                System.out.println(&quot;Password doesn't match&quot;);</span>
+<span class="fc" id="L64">                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)</span>
+<span class="fc" id="L65">                    .body(&quot;Invalid credentials&quot;);</span>
+            }
+
+<span class="fc" id="L68">            String token = jwtAuthtenticationConfig.getJWTToken(username);</span>
+<span class="fc" id="L69">            return ResponseEntity.ok(token);</span>
+            
+<span class="nc" id="L71">        } catch (UsernameNotFoundException e) {</span>
+<span class="nc" id="L72">            System.out.println(&quot;User not found: &quot; + e.getMessage());</span>
+<span class="nc" id="L73">            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)</span>
+<span class="nc" id="L74">                .body(&quot;User not found&quot;);</span>
+<span class="nc" id="L75">        } catch (Exception e) {</span>
+<span class="nc" id="L76">            System.out.println(&quot;Unexpected error: &quot; + e.getMessage());</span>
+<span class="nc" id="L77">            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L78">                .body(&quot;An error occurred&quot;);</span>
+        }
+    }
+
+    @GetMapping(&quot;/validation&quot;)
+    public ResponseEntity&lt;String&gt; validateUser() {
+        // Obtén la información de autenticación del contexto de seguridad
+<span class="nc" id="L85">        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();</span>
+        // Verifica si el usuario está autenticado
+<span class="nc bnc" id="L87" title="All 4 branches missed.">        if (authentication != null &amp;&amp; authentication.isAuthenticated()) {</span>
+<span class="nc" id="L88">            String token = jwtAuthtenticationConfig.getJWTToken(authentication.getName());</span>
+<span class="nc" id="L89">            return ResponseEntity.ok(token);</span>
+        } else {
+<span class="nc" id="L91">            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(&quot;User is not authenticated&quot;);</span>
+        }
+    }
+
+    // Endpoint público para obtener solo los nombres de las recetas
+    @GetMapping(&quot;/recetas/nombres&quot;)
+    public ResponseEntity&lt;List&lt;String&gt;&gt; getNombresRecetas() {
+<span class="fc" id="L98">        List&lt;String&gt; nombresRecetas = recetaService.obtenerNombresDeRecetas();</span>
+<span class="fc" id="L99">        return ResponseEntity.ok(nombresRecetas);</span>
+    }
+
+    // Nuevo endpoint público para insertar múltiples recetas
+    @PostMapping(&quot;/recetas/multiples&quot;)
+    public ResponseEntity&lt;String&gt; insertarMultiplesRecetas(@RequestBody List&lt;Receta&gt; recetas) {
+<span class="fc" id="L105">        recetaService.guardarRecetas(recetas);</span>
+<span class="fc" id="L106">        return ResponseEntity.status(HttpStatus.CREATED).body(&quot;Recetas insertadas exitosamente&quot;);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

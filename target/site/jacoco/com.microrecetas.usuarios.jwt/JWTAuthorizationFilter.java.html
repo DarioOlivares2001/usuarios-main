@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JWTAuthorizationFilter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">usuarios</a> &gt; <a href="index.source.html" class="el_package">com.microrecetas.usuarios.jwt</a> &gt; <span class="el_source">JWTAuthorizationFilter.java</span></div><h1>JWTAuthorizationFilter.java</h1><pre class="source lang-java linenums">package com.microrecetas.usuarios.jwt;
+
+import io.jsonwebtoken.*;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
+import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+
+import static com.microrecetas.usuarios.jwt.Constants.*;
+
+@Component
+<span class="fc" id="L22">public class JWTAuthorizationFilter extends OncePerRequestFilter {</span>
+
+    private Claims setSigningKey(HttpServletRequest request) {
+<span class="nc" id="L25">        String jwtToken = request.getHeader(HEADER_AUTHORIZACION_KEY)</span>
+<span class="nc" id="L26">                .replace(TOKEN_BEARER_PREFIX, &quot;&quot;);</span>
+    
+<span class="nc" id="L28">        return Jwts.parserBuilder()                                  </span>
+<span class="nc" id="L29">                .setSigningKey(getSigningKey(SUPER_SECRET_KEY))       </span>
+<span class="nc" id="L30">                .build()                                             </span>
+<span class="nc" id="L31">                .parseClaimsJws(jwtToken)                         </span>
+<span class="nc" id="L32">                .getBody();                                         </span>
+    }
+
+   private void setAuthentication(Claims claims) {
+        @SuppressWarnings(&quot;unchecked&quot;)
+<span class="nc" id="L37">        List&lt;String&gt; authorities = (List&lt;String&gt;) claims.get(&quot;authorities&quot;);</span>
+
+<span class="nc" id="L39">        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(</span>
+<span class="nc" id="L40">                claims.getSubject(),</span>
+                null,
+<span class="nc" id="L42">                authorities.stream()</span>
+<span class="nc" id="L43">                        .map(SimpleGrantedAuthority::new)</span>
+<span class="nc" id="L44">                        .collect(Collectors.toList())</span>
+        );
+
+<span class="nc" id="L47">        SecurityContextHolder.getContext().setAuthentication(auth);</span>
+<span class="nc" id="L48">    }</span>
+
+    private boolean isJWTValid(HttpServletRequest request, HttpServletResponse res) {
+<span class="nc" id="L51">        String authenticationHeader = request.getHeader(HEADER_AUTHORIZACION_KEY);</span>
+<span class="nc bnc" id="L52" title="All 4 branches missed.">        return authenticationHeader != null &amp;&amp; authenticationHeader.startsWith(TOKEN_BEARER_PREFIX);</span>
+    }
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) 
+            throws ServletException, IOException {
+        try {
+<span class="nc bnc" id="L59" title="All 2 branches missed.">            if (isJWTValid(request, response)) {</span>
+<span class="nc" id="L60">                Claims claims = setSigningKey(request);</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">                if (claims.get(&quot;authorities&quot;) != null) {</span>
+<span class="nc" id="L62">                    setAuthentication(claims);</span>
+                } else {
+<span class="nc" id="L64">                    SecurityContextHolder.clearContext();</span>
+                }
+<span class="nc" id="L66">            } else {</span>
+<span class="nc" id="L67">                SecurityContextHolder.clearContext();</span>
+            }
+<span class="nc" id="L69">            filterChain.doFilter(request, response);</span>
+<span class="nc" id="L70">        } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException e) {</span>
+<span class="nc" id="L71">            response.setStatus(HttpServletResponse.SC_FORBIDDEN);</span>
+<span class="nc" id="L72">            response.sendError(HttpServletResponse.SC_FORBIDDEN, e.getMessage());</span>
+<span class="nc" id="L73">        }</span>
+<span class="nc" id="L74">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

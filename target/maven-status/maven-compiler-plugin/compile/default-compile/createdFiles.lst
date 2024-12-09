@@ -1,4 +1,5 @@
 com\microrecetas\usuarios\jwt\JWTAuthorizationFilter.class
+com\microrecetas\usuarios\model\Comentario.class
 com\microrecetas\usuarios\config\PasswordEncoderConfig.class
 com\microrecetas\usuarios\controller\RecetasController.class
 com\microrecetas\usuarios\repository\UserRepository.class
@@ -9,8 +10,10 @@ com\microrecetas\usuarios\model\Receta.class
 com\microrecetas\usuarios\jwt\WebSecurityConfig.class
 com\microrecetas\usuarios\jwt\JWTAuthtenticationConfig.class
 com\microrecetas\usuarios\service\RecetaService.class
+com\microrecetas\usuarios\service\ComentarioService.class
 com\microrecetas\usuarios\controller\UserController.class
 com\microrecetas\usuarios\jwt\Constants.class
 com\microrecetas\usuarios\service\CustomUserDetailsService.class
+com\microrecetas\usuarios\repository\ComentarioRepository.class
 com\microrecetas\usuarios\UsuariosApplication.class
 com\microrecetas\usuarios\service\UserService.class

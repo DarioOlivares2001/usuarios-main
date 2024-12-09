@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RecetaService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">usuarios</a> &gt; <a href="index.source.html" class="el_package">com.microrecetas.usuarios.service</a> &gt; <span class="el_source">RecetaService.java</span></div><h1>RecetaService.java</h1><pre class="source lang-java linenums">package com.microrecetas.usuarios.service;
+
+import com.microrecetas.usuarios.model.Receta;
+import com.microrecetas.usuarios.repository.RecetaRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class RecetaService {
+
+    private final RecetaRepository recetaRepository;
+
+
+<span class="fc" id="L16">    public RecetaService(RecetaRepository recetaRepository) {</span>
+<span class="fc" id="L17">        this.recetaRepository = recetaRepository;</span>
+<span class="fc" id="L18">    }</span>
+
+    public List&lt;Receta&gt; obtenerTodasLasRecetas() {
+<span class="nc" id="L21">        return recetaRepository.findAll();</span>
+    }
+
+    public Optional&lt;Receta&gt; obtenerRecetaPorId(Long id) {
+<span class="nc" id="L25">        return recetaRepository.findById(id);</span>
+    }
+
+    public Receta crearReceta(Receta receta) {
+<span class="nc" id="L29">        return recetaRepository.save(receta);</span>
+    }
+
+    public Receta actualizarReceta(Long id, Receta recetaActualizada) {
+<span class="nc" id="L33">        return recetaRepository.findById(id)</span>
+<span class="nc" id="L34">                .map(receta -&gt; {</span>
+<span class="nc" id="L35">                    receta.setNombre(recetaActualizada.getNombre());</span>
+<span class="nc" id="L36">                    receta.setTipoCocina(recetaActualizada.getTipoCocina());</span>
+<span class="nc" id="L37">                    receta.setPaisOrigen(recetaActualizada.getPaisOrigen());</span>
+<span class="nc" id="L38">                    receta.setDificultad(recetaActualizada.getDificultad());</span>
+<span class="nc" id="L39">                    receta.setInstrucciones(recetaActualizada.getInstrucciones());</span>
+<span class="nc" id="L40">                    receta.setTiempoCoccion(recetaActualizada.getTiempoCoccion());</span>
+<span class="nc" id="L41">                    receta.setIngredientes(recetaActualizada.getIngredientes());</span>
+<span class="nc" id="L42">                    receta.setFotografia(recetaActualizada.getFotografia());</span>
+<span class="nc" id="L43">                    return recetaRepository.save(receta);</span>
+<span class="nc" id="L44">                }).orElseThrow(() -&gt; new RuntimeException(&quot;Receta no encontrada&quot;));</span>
+    }
+
+    public void eliminarReceta(Long id) {
+<span class="nc" id="L48">        recetaRepository.deleteById(id);</span>
+<span class="nc" id="L49">    }</span>
+
+     // Método para obtener solo los nombres de las recetas
+     public List&lt;String&gt; obtenerNombresDeRecetas() {
+<span class="nc" id="L53">        return recetaRepository.findAllNombres();</span>
+    }
+
+    public void guardarRecetas(List&lt;Receta&gt; recetas) {
+<span class="nc" id="L57">        recetaRepository.saveAll(recetas);</span>
+<span class="nc" id="L58">    }</span>
+
+    public Receta buscarRecetaPorNombre(String nombre) {
+<span class="nc" id="L61">        return recetaRepository.findByNombre(nombre);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

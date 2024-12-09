@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JWTAuthtenticationConfig.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">usuarios</a> &gt; <a href="index.source.html" class="el_package">com.microrecetas.usuarios.jwt</a> &gt; <span class="el_source">JWTAuthtenticationConfig.java</span></div><h1>JWTAuthtenticationConfig.java</h1><pre class="source lang-java linenums">package com.microrecetas.usuarios.jwt;
+
+import io.jsonwebtoken.Jwts;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.microrecetas.usuarios.jwt.Constants.*;
+
+
+@Configuration
+<span class="fc" id="L16">public class JWTAuthtenticationConfig {</span>
+
+   public String getJWTToken(String username) {
+<span class="nc" id="L19">    List&lt;GrantedAuthority&gt; grantedAuthorities = AuthorityUtils</span>
+<span class="nc" id="L20">        .commaSeparatedStringToAuthorityList(&quot;ROLE_USER&quot;);</span>
+
+<span class="nc" id="L22">    String token = Jwts.builder()</span>
+<span class="nc" id="L23">        .setSubject(username)  // Usar setSubject en lugar de subject</span>
+<span class="nc" id="L24">        .claim(&quot;authorities&quot;, grantedAuthorities.stream()  // Usar setClaim en lugar de claim</span>
+<span class="nc" id="L25">            .map(GrantedAuthority::getAuthority)</span>
+<span class="nc" id="L26">            .collect(Collectors.toList()))</span>
+<span class="nc" id="L27">        .setIssuedAt(new Date(System.currentTimeMillis()))  // Usar setIssuedAt en lugar de issuedAt</span>
+<span class="nc" id="L28">        .setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION_TIME))  // Usar setExpiration en lugar de expiration</span>
+<span class="nc" id="L29">        .signWith(getSigningKey(SUPER_SECRET_KEY))  // Este método se mantiene igual</span>
+<span class="nc" id="L30">        .compact();</span>
+
+<span class="nc" id="L32">    return TOKEN_BEARER_PREFIX + token;</span>
+}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

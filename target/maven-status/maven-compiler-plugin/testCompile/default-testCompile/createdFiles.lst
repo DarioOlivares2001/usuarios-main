@@ -1,1 +1,6 @@
+com\microrecetas\usuarios\controller\RecetasControllerTest.class
+com\microrecetas\usuarios\service\CustomUserDetailsServiceTest.class
 com\microrecetas\usuarios\UsuariosApplicationTests.class
+com\microrecetas\usuarios\service\UserServiceTest.class
+com\microrecetas\usuarios\controller\UserControllerTest.class
+com\microrecetas\usuarios\service\ComentarioServiceTest.class
