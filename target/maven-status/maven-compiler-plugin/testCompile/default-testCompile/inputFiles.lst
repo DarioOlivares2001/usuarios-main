@@ -1,6 +1,15 @@
+C:\SeguridadCalidad\Semana5\usuarios-main\src\test\java\com\microrecetas\usuarios\config\PasswordEncoderConfigTest.java
 C:\SeguridadCalidad\Semana5\usuarios-main\src\test\java\com\microrecetas\usuarios\controller\RecetasControllerTest.java
 C:\SeguridadCalidad\Semana5\usuarios-main\src\test\java\com\microrecetas\usuarios\controller\UserControllerTest.java
+C:\SeguridadCalidad\Semana5\usuarios-main\src\test\java\com\microrecetas\usuarios\jwt\ConstantsTest.java
+C:\SeguridadCalidad\Semana5\usuarios-main\src\test\java\com\microrecetas\usuarios\jwt\JWTAuthorizationFilterTest.java
+C:\SeguridadCalidad\Semana5\usuarios-main\src\test\java\com\microrecetas\usuarios\jwt\JWTAuthtenticationConfigTest.java
+C:\SeguridadCalidad\Semana5\usuarios-main\src\test\java\com\microrecetas\usuarios\model\ComentarioTest.java
+C:\SeguridadCalidad\Semana5\usuarios-main\src\test\java\com\microrecetas\usuarios\model\RecetaTest.java
+C:\SeguridadCalidad\Semana5\usuarios-main\src\test\java\com\microrecetas\usuarios\model\UserTest.java
 C:\SeguridadCalidad\Semana5\usuarios-main\src\test\java\com\microrecetas\usuarios\service\ComentarioServiceTest.java
 C:\SeguridadCalidad\Semana5\usuarios-main\src\test\java\com\microrecetas\usuarios\service\CustomUserDetailServiceTest.java
+C:\SeguridadCalidad\Semana5\usuarios-main\src\test\java\com\microrecetas\usuarios\service\PasswordTooShortException.java
+C:\SeguridadCalidad\Semana5\usuarios-main\src\test\java\com\microrecetas\usuarios\service\RecetaServiceTest.java
 C:\SeguridadCalidad\Semana5\usuarios-main\src\test\java\com\microrecetas\usuarios\service\UserServiceTest.java
 C:\SeguridadCalidad\Semana5\usuarios-main\src\test\java\com\microrecetas\usuarios\UsuariosApplicationTests.java

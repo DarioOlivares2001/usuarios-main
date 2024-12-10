@@ -5,7 +5,7 @@ import io.jsonwebtoken.security.Keys;
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 
-public class Constants {
+class Constants {
     public static final String LOGIN_URL = "/api/login";
     public static final String REGISTER_URL = "/api/register";
     public static final String HEADER_AUTHORIZACION_KEY = "Authorization";

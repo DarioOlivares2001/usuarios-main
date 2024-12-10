@@ -3,6 +3,10 @@ package com.microrecetas.usuarios.service;
 
 import com.microrecetas.usuarios.model.User;
 import com.microrecetas.usuarios.repository.UserRepository;
+
+import java.util.List;
+
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -12,14 +16,39 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-<span class="fc" id="L15">    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {</span>
-<span class="fc" id="L16">        this.userRepository = userRepository;</span>
-<span class="fc" id="L17">        this.passwordEncoder = passwordEncoder;</span>
-<span class="fc" id="L18">    }</span>
+<span class="fc" id="L19">    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {</span>
+<span class="fc" id="L20">        this.userRepository = userRepository;</span>
+<span class="fc" id="L21">        this.passwordEncoder = passwordEncoder;</span>
+<span class="fc" id="L22">    }</span>
 
     public void registerUser(User user) {
-<span class="fc" id="L21">        user.setPassword(passwordEncoder.encode(user.getPassword()));</span>
-<span class="fc" id="L22">        userRepository.save(user);</span>
-<span class="fc" id="L23">    }</span>
+<span class="fc" id="L25">        user.setPassword(passwordEncoder.encode(user.getPassword()));</span>
+<span class="fc" id="L26">        userRepository.save(user);</span>
+<span class="fc" id="L27">    }</span>
+
+    public User loginUser(String username, String password) throws UsernameNotFoundException {
+<span class="fc" id="L30">        return userRepository.findByUsername(username)</span>
+<span class="fc" id="L31">                .filter(u -&gt; passwordEncoder.matches(password, u.getPassword()))</span>
+<span class="fc" id="L32">                .orElseThrow(() -&gt; new UsernameNotFoundException(&quot;Invalid credentials&quot;));  // Retorna directamente el usuario autenticado</span>
+    }
+
+    public void updateUser(String username, User updatedUser) {
+<span class="fc" id="L36">        User existingUser = userRepository.findByUsername(username)</span>
+<span class="pc" id="L37">                .orElseThrow(() -&gt; new UsernameNotFoundException(&quot;no se encontro el usuario&quot;));</span>
+
+<span class="fc" id="L39">        existingUser.setUsername(updatedUser.getUsername());</span>
+<span class="fc" id="L40">        existingUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));</span>
+<span class="fc" id="L41">        userRepository.save(existingUser);</span>
+<span class="fc" id="L42">    }</span>
+
+    public void deleteUser(String username) {
+<span class="fc" id="L45">        User user = userRepository.findByUsername(username)</span>
+<span class="fc" id="L46">                .orElseThrow(() -&gt; new UsernameNotFoundException(&quot;no hay usuario&quot;));</span>
+<span class="fc" id="L47">        userRepository.delete(user);</span>
+<span class="fc" id="L48">    }</span>
+
+    public List&lt;User&gt; getAllUsers() {
+<span class="fc" id="L51">        return userRepository.findAll();</span>
+    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -16,20 +16,20 @@ import static com.microrecetas.usuarios.jwt.Constants.*;
 <span class="fc" id="L16">public class JWTAuthtenticationConfig {</span>
 
    public String getJWTToken(String username) {
-<span class="nc" id="L19">    List&lt;GrantedAuthority&gt; grantedAuthorities = AuthorityUtils</span>
-<span class="nc" id="L20">        .commaSeparatedStringToAuthorityList(&quot;ROLE_USER&quot;);</span>
+<span class="fc" id="L19">    List&lt;GrantedAuthority&gt; grantedAuthorities = AuthorityUtils</span>
+<span class="fc" id="L20">        .commaSeparatedStringToAuthorityList(&quot;ROLE_USER&quot;);</span>
 
-<span class="nc" id="L22">    String token = Jwts.builder()</span>
-<span class="nc" id="L23">        .setSubject(username)  // Usar setSubject en lugar de subject</span>
-<span class="nc" id="L24">        .claim(&quot;authorities&quot;, grantedAuthorities.stream()  // Usar setClaim en lugar de claim</span>
-<span class="nc" id="L25">            .map(GrantedAuthority::getAuthority)</span>
-<span class="nc" id="L26">            .collect(Collectors.toList()))</span>
-<span class="nc" id="L27">        .setIssuedAt(new Date(System.currentTimeMillis()))  // Usar setIssuedAt en lugar de issuedAt</span>
-<span class="nc" id="L28">        .setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION_TIME))  // Usar setExpiration en lugar de expiration</span>
-<span class="nc" id="L29">        .signWith(getSigningKey(SUPER_SECRET_KEY))  // Este método se mantiene igual</span>
-<span class="nc" id="L30">        .compact();</span>
+<span class="fc" id="L22">    String token = Jwts.builder()</span>
+<span class="fc" id="L23">        .setSubject(username)  // Usar setSubject en lugar de subject</span>
+<span class="fc" id="L24">        .claim(&quot;authorities&quot;, grantedAuthorities.stream()  // Usar setClaim en lugar de claim</span>
+<span class="fc" id="L25">            .map(GrantedAuthority::getAuthority)</span>
+<span class="fc" id="L26">            .collect(Collectors.toList()))</span>
+<span class="fc" id="L27">        .setIssuedAt(new Date(System.currentTimeMillis()))  // Usar setIssuedAt en lugar de issuedAt</span>
+<span class="fc" id="L28">        .setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION_TIME))  // Usar setExpiration en lugar de expiration</span>
+<span class="fc" id="L29">        .signWith(getSigningKey(SUPER_SECRET_KEY))  // Este método se mantiene igual</span>
+<span class="fc" id="L30">        .compact();</span>
 
-<span class="nc" id="L32">    return TOKEN_BEARER_PREFIX + token;</span>
+<span class="fc" id="L32">    return TOKEN_BEARER_PREFIX + token;</span>
 }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -24,7 +24,7 @@ public class RecetasController {
     @Autowired
     private RecetaService recetaService;
 
-    @Autowired
+ 
     private ComentarioService comentarioService;
 
  // Endpoint para traer todas las recetas

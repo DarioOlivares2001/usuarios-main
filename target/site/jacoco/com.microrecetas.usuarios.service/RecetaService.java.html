@@ -18,47 +18,47 @@ public class RecetaService {
 <span class="fc" id="L18">    }</span>
 
     public List&lt;Receta&gt; obtenerTodasLasRecetas() {
-<span class="nc" id="L21">        return recetaRepository.findAll();</span>
+<span class="fc" id="L21">        return recetaRepository.findAll();</span>
     }
 
     public Optional&lt;Receta&gt; obtenerRecetaPorId(Long id) {
-<span class="nc" id="L25">        return recetaRepository.findById(id);</span>
+<span class="fc" id="L25">        return recetaRepository.findById(id);</span>
     }
 
     public Receta crearReceta(Receta receta) {
-<span class="nc" id="L29">        return recetaRepository.save(receta);</span>
+<span class="fc" id="L29">        return recetaRepository.save(receta);</span>
     }
 
     public Receta actualizarReceta(Long id, Receta recetaActualizada) {
-<span class="nc" id="L33">        return recetaRepository.findById(id)</span>
-<span class="nc" id="L34">                .map(receta -&gt; {</span>
-<span class="nc" id="L35">                    receta.setNombre(recetaActualizada.getNombre());</span>
-<span class="nc" id="L36">                    receta.setTipoCocina(recetaActualizada.getTipoCocina());</span>
-<span class="nc" id="L37">                    receta.setPaisOrigen(recetaActualizada.getPaisOrigen());</span>
-<span class="nc" id="L38">                    receta.setDificultad(recetaActualizada.getDificultad());</span>
-<span class="nc" id="L39">                    receta.setInstrucciones(recetaActualizada.getInstrucciones());</span>
-<span class="nc" id="L40">                    receta.setTiempoCoccion(recetaActualizada.getTiempoCoccion());</span>
-<span class="nc" id="L41">                    receta.setIngredientes(recetaActualizada.getIngredientes());</span>
-<span class="nc" id="L42">                    receta.setFotografia(recetaActualizada.getFotografia());</span>
-<span class="nc" id="L43">                    return recetaRepository.save(receta);</span>
-<span class="nc" id="L44">                }).orElseThrow(() -&gt; new RuntimeException(&quot;Receta no encontrada&quot;));</span>
+<span class="fc" id="L33">        return recetaRepository.findById(id)</span>
+<span class="fc" id="L34">                .map(receta -&gt; {</span>
+<span class="fc" id="L35">                    receta.setNombre(recetaActualizada.getNombre());</span>
+<span class="fc" id="L36">                    receta.setTipoCocina(recetaActualizada.getTipoCocina());</span>
+<span class="fc" id="L37">                    receta.setPaisOrigen(recetaActualizada.getPaisOrigen());</span>
+<span class="fc" id="L38">                    receta.setDificultad(recetaActualizada.getDificultad());</span>
+<span class="fc" id="L39">                    receta.setInstrucciones(recetaActualizada.getInstrucciones());</span>
+<span class="fc" id="L40">                    receta.setTiempoCoccion(recetaActualizada.getTiempoCoccion());</span>
+<span class="fc" id="L41">                    receta.setIngredientes(recetaActualizada.getIngredientes());</span>
+<span class="fc" id="L42">                    receta.setFotografia(recetaActualizada.getFotografia());</span>
+<span class="fc" id="L43">                    return recetaRepository.save(receta);</span>
+<span class="pc" id="L44">                }).orElseThrow(() -&gt; new RuntimeException(&quot;Receta no encontrada&quot;));</span>
     }
 
     public void eliminarReceta(Long id) {
-<span class="nc" id="L48">        recetaRepository.deleteById(id);</span>
-<span class="nc" id="L49">    }</span>
+<span class="fc" id="L48">        recetaRepository.deleteById(id);</span>
+<span class="fc" id="L49">    }</span>
 
      // Método para obtener solo los nombres de las recetas
      public List&lt;String&gt; obtenerNombresDeRecetas() {
-<span class="nc" id="L53">        return recetaRepository.findAllNombres();</span>
+<span class="fc" id="L53">        return recetaRepository.findAllNombres();</span>
     }
 
     public void guardarRecetas(List&lt;Receta&gt; recetas) {
-<span class="nc" id="L57">        recetaRepository.saveAll(recetas);</span>
-<span class="nc" id="L58">    }</span>
+<span class="fc" id="L57">        recetaRepository.saveAll(recetas);</span>
+<span class="fc" id="L58">    }</span>
 
     public Receta buscarRecetaPorNombre(String nombre) {
-<span class="nc" id="L61">        return recetaRepository.findByNombre(nombre);</span>
+<span class="fc" id="L61">        return recetaRepository.findByNombre(nombre);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

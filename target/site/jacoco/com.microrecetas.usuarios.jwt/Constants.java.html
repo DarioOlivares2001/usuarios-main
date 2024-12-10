@@ -5,7 +5,7 @@ import io.jsonwebtoken.security.Keys;
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 
-<span class="nc" id="L8">public class Constants {</span>
+<span class="nc" id="L8">class Constants {</span>
     public static final String LOGIN_URL = &quot;/api/login&quot;;
     public static final String REGISTER_URL = &quot;/api/register&quot;;
     public static final String HEADER_AUTHORIZACION_KEY = &quot;Authorization&quot;;
@@ -15,13 +15,13 @@ import java.nio.charset.StandardCharsets;
     public static final long TOKEN_EXPIRATION_TIME = 864_000_000; // 10 days
 
     public static SecretKey getSigningKeyB64(String secret) {
-<span class="nc" id="L18">        byte[] keyBytes = Decoders.BASE64.decode(secret);</span>
-<span class="nc" id="L19">        return Keys.hmacShaKeyFor(keyBytes);</span>
+<span class="fc" id="L18">        byte[] keyBytes = Decoders.BASE64.decode(secret);</span>
+<span class="fc" id="L19">        return Keys.hmacShaKeyFor(keyBytes);</span>
     }
 
     public static SecretKey getSigningKey(String secret) {
-<span class="nc" id="L23">        byte[] keyBytes = secret.getBytes(StandardCharsets.UTF_8);</span>
-<span class="nc" id="L24">        return Keys.hmacShaKeyFor(keyBytes);</span>
+<span class="fc" id="L23">        byte[] keyBytes = secret.getBytes(StandardCharsets.UTF_8);</span>
+<span class="fc" id="L24">        return Keys.hmacShaKeyFor(keyBytes);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

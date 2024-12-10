@@ -25,7 +25,7 @@ import org.springframework.security.core.Authentication;
 @RequestMapping("/api")
 public class UserController {
 
-    @Autowired
+    
     private UserService userService;
 
     @Autowired

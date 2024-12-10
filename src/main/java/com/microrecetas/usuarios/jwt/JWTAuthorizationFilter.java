@@ -21,7 +21,7 @@ import static com.microrecetas.usuarios.jwt.Constants.*;
 @Component
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
-    private Claims setSigningKey(HttpServletRequest request) {
+    Claims setSigningKey(HttpServletRequest request) {
         String jwtToken = request.getHeader(HEADER_AUTHORIZACION_KEY)
                 .replace(TOKEN_BEARER_PREFIX, "");
     

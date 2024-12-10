@@ -1,17 +1,17 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-usuarios,com.microrecetas.usuarios.model,User,7,17,0,0,3,7,2,5,2,5
-usuarios,com.microrecetas.usuarios.model,Comentario,18,25,0,0,8,10,5,5,5,5
-usuarios,com.microrecetas.usuarios.model,Receta,67,43,0,0,29,16,19,5,19,5
+usuarios,com.microrecetas.usuarios.model,User,9,24,0,0,4,11,1,7,1,7
+usuarios,com.microrecetas.usuarios.model,Comentario,0,43,0,0,0,18,0,10,0,10
+usuarios,com.microrecetas.usuarios.model,Receta,0,110,0,0,0,45,0,24,0,24
 usuarios,com.microrecetas.usuarios.controller,UserController,44,63,4,2,13,16,3,6,1,5
 usuarios,com.microrecetas.usuarios.controller,RecetasController,11,48,0,0,2,9,0,8,0,8
 usuarios,com.microrecetas.usuarios.service,CustomUserDetailsService,0,34,0,0,0,9,0,3,0,3
 usuarios,com.microrecetas.usuarios.service,ComentarioService,0,12,0,0,0,4,0,2,0,2
-usuarios,com.microrecetas.usuarios.service,UserService,0,22,0,0,0,7,0,2,0,2
-usuarios,com.microrecetas.usuarios.service,RecetaService,90,6,0,0,21,3,10,1,10,1
+usuarios,com.microrecetas.usuarios.service,UserService,5,93,0,0,0,21,1,9,1,9
+usuarios,com.microrecetas.usuarios.service,RecetaService,5,91,0,0,0,24,1,10,1,10
 usuarios,com.microrecetas.usuarios,UsuariosApplication,5,3,0,0,2,1,1,1,1,1
 usuarios,com.microrecetas.usuarios.config,PasswordEncoderConfig,0,7,0,0,0,2,0,2,0,2
-usuarios,com.microrecetas.usuarios.jwt,JWTAuthorizationFilter,89,3,8,0,30,1,8,1,4,1
-usuarios,com.microrecetas.usuarios.jwt,Constants,18,0,0,0,5,0,3,0,3,0
+usuarios,com.microrecetas.usuarios.jwt,JWTAuthorizationFilter,48,44,5,3,18,13,5,4,1,4
+usuarios,com.microrecetas.usuarios.jwt,Constants,3,15,0,0,1,4,1,2,1,2
 usuarios,com.microrecetas.usuarios.jwt,WebSecurityConfig.new WebMvcConfigurer() {...},0,32,0,0,0,6,0,2,0,2
 usuarios,com.microrecetas.usuarios.jwt,WebSecurityConfig,0,90,0,0,0,15,0,7,0,7
-usuarios,com.microrecetas.usuarios.jwt,JWTAuthtenticationConfig,34,3,0,0,12,1,1,1,1,1
+usuarios,com.microrecetas.usuarios.jwt,JWTAuthtenticationConfig,0,37,0,0,0,13,0,2,0,2

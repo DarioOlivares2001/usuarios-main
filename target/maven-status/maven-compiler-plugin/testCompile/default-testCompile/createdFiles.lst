@@ -1,6 +1,15 @@
 com\microrecetas\usuarios\controller\RecetasControllerTest.class
-com\microrecetas\usuarios\service\CustomUserDetailsServiceTest.class
+com\microrecetas\usuarios\model\UserTest.class
 com\microrecetas\usuarios\UsuariosApplicationTests.class
 com\microrecetas\usuarios\service\UserServiceTest.class
+com\microrecetas\usuarios\service\CustomUserDetailsServiceTest.class
+com\microrecetas\usuarios\service\PasswordTooShortException.class
+com\microrecetas\usuarios\jwt\ConstantsTest.class
+com\microrecetas\usuarios\model\RecetaTest.class
 com\microrecetas\usuarios\controller\UserControllerTest.class
+com\microrecetas\usuarios\config\PasswordEncoderConfigTest.class
+com\microrecetas\usuarios\model\ComentarioTest.class
+com\microrecetas\usuarios\jwt\JWTAuthorizationFilterTest.class
+com\microrecetas\usuarios\jwt\JWTAuthtenticationConfigTest.class
 com\microrecetas\usuarios\service\ComentarioServiceTest.class
+com\microrecetas\usuarios\service\RecetaServiceTest.class
